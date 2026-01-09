@@ -11,7 +11,7 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
+  
 export const metadata: Metadata = {
   title: "Singalist",
   description: "Track real time stock prices, get personalized alerts and explore detailed company insights.",
