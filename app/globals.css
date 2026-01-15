@@ -1,5 +1,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "country-flag-icons/3x2/flags.css";
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -141,7 +143,10 @@
   }
 }
 
+
+
 @layer utilities {
+
   .container {
     @apply px-4 mx-auto max-w-screen-2xl md:px-6 lg:px-8;
   }
