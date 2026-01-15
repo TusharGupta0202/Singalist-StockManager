@@ -36,6 +36,7 @@ const SingIn = () => {
           name="email"
           label="Email"
           placeholder="Enter your email"
+          type="email"
           register={register}
           error={errors.email}
           validation={{ required: 'Email is required', pattern: /^\w+@\w+\.\w+$/ , message: 'Invalid email address' }}
