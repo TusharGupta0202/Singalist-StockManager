@@ -1,0 +1,56 @@
+import Image from "next/image"
+import Link from "next/link"
+
+
+const layout = ({children}: {children: React.ReactNode}) => {
+  return (
+    <main className="auth-layout">
+        <section className="auth-left-section scrollbar-hide-default">
+            <Link href='/' className="auth-logo">
+                <Image src="/assets/icons/logo.svg" alt="Signalist Logo" width={140} height={32} className="w-auto h-8" /> 
+            </Link>
+
+            <div className="flex-1 pb-6 lg:pb-8">
+                {children}
+            </div>
+        </section>
+        <section className="auth-right-section">
+            <div className="relative z-10 lg:mt-4 lg:mb-16 ">
+                <blockquote className="auth-blockquote">
+                    Signalist turned my watchlist into a winning list. The alerts are so spot on, and I feel more confident making moves in my market 
+                </blockquote>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <cite className="auth-testimonial-author">- Ethen R.</cite>
+                        <p className="text-gray-500 max-md:text-xs">Retail Invester</p> 
+                    </div>
+                    <div className="flex items-center gap-0.5">
+                        {[...Array(5)].map((_,index) => (
+                            <Image 
+                                key={index}
+                                src="/assets/icons/star.svg"
+                                alt="Star Rating"
+                                width={20}
+                                height={20}
+                                className="w-5 h-5"
+                            />
+                        ))}
+                    </div>
+                </div>
+            </div>
+            <div className="relative flex-1">
+                <Image 
+                    src="/assets/images/dashboard.png"
+                    alt="Dashboard Preview"
+                    width={1440}
+                    height={1150}
+                    className="absolute top-0 auth-dashboard-preview"
+                />
+            </div>
+        </section>        
+    </main>
+  )
+}
+
+export default layout
+
