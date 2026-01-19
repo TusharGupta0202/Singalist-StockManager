@@ -1,5 +1,4 @@
 import TradingViewWidet from '@/components/TradingViewWidet'
-import { Button } from '@/components/ui/button'
 import { HEATMAP_WIDGET_CONFIG, MARKET_DATA_WIDGET_CONFIG, MARKET_OVERVIEW_WIDGET_CONFIG, TOP_STORIES_WIDGET_CONFIG } from '@/lib/constants'
 
 const Home = () => {
@@ -25,7 +24,7 @@ const Home = () => {
           />
         </div>
       </section>
-
+      
       <section className='grid w-full gap-8 home-section'>
         <div className='h-full md:col-span-1 xl:col-span-1'>
           <TradingViewWidet 
