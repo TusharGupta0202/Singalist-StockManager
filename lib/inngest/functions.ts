@@ -65,11 +65,11 @@ export const sendDailyNewsSummary = inngest.createFunction(
                     const symbols = await getWatchlistSymbolsByEmail(user.email);
                     let articles = await getNews(symbols);
                     // Enforce max 6 articles per user
-                    articles = (articles || []).slice(0, 6);
+                    articles = (articles || []).slice(0, 15);
                     // If still empty, fallback to general
                     if (!articles || articles.length === 0) {
                         articles = await getNews();
-                        articles = (articles || []).slice(0, 6);
+                        articles = (articles || []).slice(0, 15);
                     }
                     perUser.push({ user, articles });
                 } catch (e) {

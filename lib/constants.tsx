@@ -10,8 +10,14 @@ export const NAV_ITEMS: {href: string, label: string}[] = [
   {
     href: "/watchlist",
     label: "Watchlist"
+  },
+  {
+    href: "/news",
+    label: "News"
   }
-]
+];
+
+
 
 // Sign-up form select options
 export const INVESTMENT_GOALS = [
@@ -346,4 +352,5 @@ export const WATCHLIST_TABLE_HEADER = [
     'Alert',
     'Action',
 ];
+
 
