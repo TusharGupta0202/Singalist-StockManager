@@ -1,4 +1,4 @@
-#Store It — Full-Stack Cloud Storage Platform
+# Store It — Full-Stack Cloud Storage Platform
 
 A production-grade cloud storage application built with modern Next.js App Router, secure OTP authentication, collaborative file sharing, analytics instrumentation, and scalable backend architecture powered by Appwrite.
 
