@@ -137,3 +137,16 @@ export const getFormattedTodayDate = () => new Date().toLocaleDateString('en-US'
   day: 'numeric',
   timeZone: 'UTC',
 });
+
+// lib/utils/finnhub.ts
+export function isFinnhubFreeSupported(symbol: string): boolean {
+  const s = symbol.toUpperCase();
+
+  // Block international symbols
+  if (s.includes('.')) return false;
+
+  // Block obvious non-equity tickers
+  if (!/^[A-Z]{1,5}$/.test(s)) return false;
+
+  return true;
+}

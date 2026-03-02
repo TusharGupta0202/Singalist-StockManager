@@ -11,128 +11,158 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form"
 import { toast } from "sonner";
 
-
-
-
 const SignUp = () => {
-    
-    const router = useRouter()
-    const {
-        register,
-        handleSubmit,
-        control,
-        formState: { errors, isSubmitting },
-    } = useForm<SignUpFormData>({
-        defaultValues: {
-            fullName: '',
-            email: '',
-            password: '',
-            country: 'IN',
-            investmentGoals: 'Growth',
-            riskTolerance: 'Medium',
-            preferredIndustry: 'Technology'
-        },
-        mode: 'onBlur',
-    },);
-    const onSubmit = async (data: SignUpFormData) => {
-        try {
-            const result = await signUpWithEmail(data);
-            
-            if(result.success) router.push('/')
-        } catch (e) {
-            console.error('Sign Up Error:', e);
-            toast.error('Signup Failed',{
-                description: e instanceof Error ? e.message : 'Failed to create an account!'
-            })
-        }
-    };
 
+  const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<SignUpFormData>({
+    defaultValues: {
+      fullName: '',
+      email: '',
+      password: '',
+      country: 'IN',
+      investmentGoals: 'Growth',
+      riskTolerance: 'Medium',
+      preferredIndustry: 'Technology'
+    },
+    mode: 'onBlur',
+  });
+
+  const onSubmit = async (data: SignUpFormData) => {
+    try {
+      const result = await signUpWithEmail(data);
+
+      if (!result.success) {
+        toast.error('Signup Failed', {
+          description:'Unable to create account'
+        });
+        return;
+      }
+
+      await router.push('/');
+    } catch (e) {
+      toast.error('Signup Failed', {
+        description: e instanceof Error ? e.message : 'Failed to create an account!'
+      });
+    }
+  };
 
   return (
     <>
-        <h1 className='form-title'>Sign Up & Personalize</h1>
+      <h1 className='form-title'>Sign Up & Personalize</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
-            <InputField 
-                name="fullName"
-                label="Full Name"
-                placeholder="Enter your full name"
-                register={register}
-                error={errors.fullName}
-                validation={{ required: 'Full name is required', minLength: 2 }}
-            />
-            
-            <InputField 
-                name="email"
-                label="Email"
-                placeholder="Enter your email"
-                type="email"
-                register={register}
-                error={errors.email}
-                validation={{ required: 'Email is required', pattern: /^\w+@\w+\.\w+$/ , message: 'Invalid email address' }}
-            />
+        <InputField
+          name="fullName"
+          label="Full Name"
+          placeholder="Enter your full name"
+          register={register}
+          error={errors.fullName}
+          validation={{
+            required: 'Full name is required',
+            minLength: {
+              value: 2,
+              message: 'Full name must be at least 2 characters'
+            }
+          }}
+        />
 
-            <CountrySelectField
-                name="country"
-                label="Country"
-                control={control}
-                error={errors.country}
-                required
-            />
+        <InputField
+          name="email"
+          label="Email"
+          placeholder="Enter your email"
+          type="email"
+          register={register}
+          error={errors.email}
+          validation={{
+            required: 'Email is required',
+            pattern: {
+              value: /^\S+@\S+\.\S+$/,
+              message: 'Invalid email address'
+            }
+          }}
+        />
 
-            <InputField 
-                name="password"
-                label="Password"
-                placeholder="Enter a strong password"
-                type="password"
-                register={register}
-                error={errors.password}
-                validation={{ required: 'Password is required', minLength: 8 }}
-            />
-            
-            <SelectField 
-                name="investmentGoals"
-                label="Investment Goals"
-                placeholder="Select your investment goals"
-                options={INVESTMENT_GOALS}
-                control={control}
-                error={errors.investmentGoals}
-                required
-            />
+        <CountrySelectField
+          name="country"
+          label="Country"
+          control={control}
+          error={errors.country}
+          required
+        />
 
-            <SelectField 
-                name="riskTolerance"
-                label="Risk Tolerance"
-                placeholder="Select your risk level"
-                options={RISK_TOLERANCE_OPTIONS}
-                control={control}
-                error={errors.riskTolerance}
-                required
-            />
+        <InputField
+          name="password"
+          label="Password"
+          placeholder="Enter a strong password"
+          type="password"
+          register={register}
+          error={errors.password}
+          validation={{
+            required: 'Password is required',
+            minLength: {
+              value: 8,
+              message: 'Password must be at least 8 characters'
+            },
+            pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
+              message: 'Password must contain uppercase, lowercase and number'
+            }
+          }}
+        />
 
-            <SelectField 
-                name="preferredIndustry"
-                label="Preferred Industry"
-                placeholder="Select your preferred industry"
-                options={PREFERRED_INDUSTRIES}
-                control={control}
-                error={errors.preferredIndustry}
-                required
-            />
+        <SelectField
+          name="investmentGoals"
+          label="Investment Goals"
+          placeholder="Select your investment goals"
+          options={INVESTMENT_GOALS}
+          control={control}
+          error={errors.investmentGoals}
+          required
+        />
 
-            <Button type="submit" disabled={isSubmitting} className="w-full mt-5 yellow-btn">
-                {isSubmitting ? 'Creating Account...' : 'Start your Investing Journey'}
-            </Button>
+        <SelectField
+          name="riskTolerance"
+          label="Risk Tolerance"
+          placeholder="Select your risk level"
+          options={RISK_TOLERANCE_OPTIONS}
+          control={control}
+          error={errors.riskTolerance}
+          required
+        />
 
-            <FooterLink 
-                text="Already have an account?"
-                linkText="Sign In"
-                href="/sign-in"
-            />
-        </form>
+        <SelectField
+          name="preferredIndustry"
+          label="Preferred Industry"
+          placeholder="Select your preferred industry"
+          options={PREFERRED_INDUSTRIES}
+          control={control}
+          error={errors.preferredIndustry}
+          required
+        />
+
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full mt-5 yellow-btn"
+        >
+          {isSubmitting ? 'Creating Account...' : 'Start your Investing Journey'}
+        </Button>
+
+        <FooterLink
+          text="Already have an account?"
+          linkText="Sign In"
+          href="/sign-in"
+        />
+      </form>
     </>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;
